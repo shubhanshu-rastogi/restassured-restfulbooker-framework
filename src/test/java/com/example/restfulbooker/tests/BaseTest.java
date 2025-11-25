@@ -5,10 +5,16 @@ import io.restassured.RestAssured;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
-import io.restassured.specification.RequestSpecification;
 import org.junit.BeforeClass;
+import org.junit.AfterClass;
+import org.junit.Rule;
+import org.junit.rules.TestWatcher;
+import org.junit.runner.Description;
 
-import static io.restassured.RestAssured.with;
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.Status;
+import com.example.restfulbooker.reporting.ExtentManager;
+import com.example.restfulbooker.reporting.ExtentTestManager;
 
 /**
  * Base test class that:
@@ -41,4 +47,48 @@ public abstract class BaseTest {
         }
         return token;
     }
+
+    @Rule
+    public TestWatcher extentWatcher = new TestWatcher() {
+
+        @Override
+        protected void starting(Description description) {
+            String testName = description.getClassName() + "." + description.getMethodName();
+            ExtentTest test = ExtentTestManager.startTest(testName);
+            test.log(Status.INFO, "Starting test: " + testName);
+        }
+
+        @Override
+        protected void succeeded(Description description) {
+            ExtentTest test = ExtentTestManager.getTest();
+            if (test != null) {
+                test.log(Status.PASS, "Test passed");
+            }
+            ExtentTestManager.endTest();
+        }
+
+        @Override
+        protected void failed(Throwable e, Description description) {
+            ExtentTest test = ExtentTestManager.getTest();
+            if (test != null) {
+                test.log(Status.FAIL, e);
+            }
+            ExtentTestManager.endTest();
+        }
+
+        @Override
+        protected void skipped(org.junit.AssumptionViolatedException e, Description description) {
+            ExtentTest test = ExtentTestManager.getTest();
+            if (test != null) {
+                test.log(Status.SKIP, "Test skipped: " + e.getMessage());
+            }
+            ExtentTestManager.endTest();
+        }
+    };
+
+    @AfterClass
+    public static void tearDownReport() {
+        ExtentManager.flush();
+    }
+
 }
