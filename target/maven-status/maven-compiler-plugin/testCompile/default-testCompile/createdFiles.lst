@@ -1,0 +1,17 @@
+com\example\restfulbooker\payloads\AuthPayload.class
+com\example\restfulbooker\specs\ResponseSpecs.class
+com\example\restfulbooker\client\BookingClient.class
+com\example\restfulbooker\specs\RequestSpecs.class
+com\example\restfulbooker\tests\AuthTests.class
+com\example\restfulbooker\client\HealthClient.class
+com\example\restfulbooker\tests\BaseTest.class
+com\example\restfulbooker\payloads\BookingDates$Builder.class
+com\example\restfulbooker\payloads\BookingDates.class
+com\example\restfulbooker\client\AuthClient.class
+com\example\restfulbooker\client\BaseClient.class
+com\example\restfulbooker\payloads\AuthPayload$Builder.class
+com\example\restfulbooker\payloads\BookingPayload$Builder.class
+com\example\restfulbooker\config\ConfigManager.class
+com\example\restfulbooker\tests\HealthCheckTests.class
+com\example\restfulbooker\payloads\BookingPayload.class
+com\example\restfulbooker\tests\BookingCrudTests.class
